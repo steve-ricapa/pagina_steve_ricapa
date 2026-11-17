@@ -1,4 +1,4 @@
-import { CERTIFICATIONS } from "../data/certifications"
+import { getCertificationCards } from "../data/certifications"
 import { EXPERIENCES } from "../data/experiences"
 import { PROJECTS } from "../data/projects"
 import { TECH_STACK } from "../data/tech-stack"
@@ -36,12 +36,28 @@ export const projectsMarkdown = PROJECTS.map((project) =>
     .join("\n\n")
 ).join("\n\n")
 
-export const certificationsMarkdown = CERTIFICATIONS.map((record) => {
-  const { title, issuer, issueDate, examCode, topics, credentialURL } = record
-  const name = examCode ? `${examCode} — ${title}` : title
-  const label = credentialURL ? `[${name}](${credentialURL})` : name
-  return `- ${[`${label} (${issuer})`, issueDate, certificationStatus(record), topics?.length && `Exam topics: ${topics.join(", ")}`].filter(Boolean).join(" · ")}`
-}).join("\n")
+export const certificationsMarkdown = getCertificationCards()
+  .map((record) => {
+    const {
+      title,
+      issuer,
+      issueDate,
+      expirationDate,
+      examCode,
+      topics,
+      credentialUrl,
+      associatedCredential,
+      officialUrl,
+      category,
+    } = record
+    const name =
+      examCode && !title.startsWith(`${examCode}:`)
+        ? `${examCode} — ${title}`
+        : title
+    const label = credentialUrl ? `[${name}](${credentialUrl})` : name
+    return `- ${[`${label} (${issuer}; ${category})`, issueDate && `Issued ${issueDate}`, expirationDate && `Expiration ${expirationDate}`, certificationStatus(record), associatedCredential && `Associated credential: ${associatedCredential}`, officialUrl && `[Official program reference](${officialUrl})`, topics?.length && `Exam topics: ${topics.join(", ")}`].filter(Boolean).join(" · ")}`
+  })
+  .join("\n")
 
 export const stackMarkdown = TECH_STACK.map(
   ({ title, category, status, context }) =>
