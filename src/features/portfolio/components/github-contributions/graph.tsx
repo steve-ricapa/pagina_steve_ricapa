@@ -1,6 +1,6 @@
 "use client"
 
-import { format } from "date-fns"
+import { format, parseISO } from "date-fns"
 import { LoaderIcon } from "lucide-react"
 
 import {
@@ -49,7 +49,7 @@ export function GitHubContributionGraph({ data }: { data: Activity[] }) {
             <TooltipContent className="font-sans">
               <p>
                 {activity.count} contribution{activity.count > 1 ? "s" : null}{" "}
-                on {format(new Date(activity.date), "dd.MM.yyyy")}
+                on {format(parseISO(activity.date), "dd.MM.yyyy")}
               </p>
             </TooltipContent>
           </Tooltip>
@@ -60,17 +60,17 @@ export function GitHubContributionGraph({ data }: { data: Activity[] }) {
         <ContributionGraphTotalCount>
           {({ totalCount }) => (
             <div className="text-muted-foreground">
-              {totalCount.toLocaleString("en")} contributions over the past year
-              on{" "}
+              {totalCount.toLocaleString("en")} contributions visible on the
+              public{" "}
               <a
                 className="font-medium underline underline-offset-4"
                 href={GITHUB_URL}
                 target="_blank"
                 rel="noopener"
               >
-                GitHub
+                GitHub profile
               </a>
-              .
+              {" "}over the past year.
             </div>
           )}
         </ContributionGraphTotalCount>

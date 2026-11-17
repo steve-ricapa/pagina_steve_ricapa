@@ -24,7 +24,7 @@ pnpm start
 
 Importa el repositorio propio en Vercel con el preset Next.js, o ejecuta `pnpm build` y `pnpm start` en un servidor Node.js. No es una exportación estática. Configura `APP_URL` con la URL HTTPS pública antes de compilar: sin ella el sitio local funciona, pero no genera enlaces canónicos públicos y solicita no indexar.
 
-El gráfico de contribuciones consulta el historial público de `steve-ricapa` a través de `github-contributions-api.jogruber.de`, sin token. Se cachean respuestas válidas por un día. Si la API devuelve un error o no está disponible, se muestra un enlace al perfil en lugar de un gráfico vacío. Puedes configurar `GITHUB_CONTRIBUTIONS_API_URL` en el servidor para usar un proveedor compatible con `/v4/<usuario>?y=last`. Si tu proveedor requiere un token, mantenlo en el servidor del proveedor; no lo expongas en variables `NEXT_PUBLIC_*` ni dentro de la URL.
+El gráfico de contribuciones consulta el historial público de `steve-ricapa` a través de `github-contributions-api.jogruber.de`, sin token. La caché local se revalida cada hora; el proveedor puede tener su propia caché. El total puede diferir de la vista autenticada del titular. Si la API devuelve un error o no está disponible, se muestra un enlace al perfil en lugar de un gráfico vacío. Puedes configurar `GITHUB_CONTRIBUTIONS_API_URL` en el servidor para usar un proveedor compatible con `/v4/<usuario>?y=last`. Si tu proveedor requiere un token, mantenlo en el servidor del proveedor; no lo expongas en variables `NEXT_PUBLIC_*` ni dentro de la URL.
 
 ## Contenido
 

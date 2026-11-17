@@ -33,6 +33,6 @@ export const getGitHubContributions = unstable_cache(
     if (!res.ok) throw new Error(`Contributions request returned ${res.status}`)
     return responseSchema.parse(await res.json()).contributions
   },
-  ["github-contributions", GITHUB_USERNAME],
-  { revalidate: 86400 }
+  ["github-public-contributions", GITHUB_USERNAME],
+  { revalidate: 3600 }
 )
