@@ -7,9 +7,14 @@ import {
   CloudIcon,
   DatabaseIcon,
   EyeIcon,
+  FingerprintIcon,
+  GitBranchIcon,
+  ImageIcon,
   LayersIcon,
+  NetworkIcon,
   ShieldIcon,
   TerminalIcon,
+  WorkflowIcon,
 } from "lucide-react"
 import { motion, useReducedMotion } from "motion/react"
 import Image from "next/image"
@@ -87,7 +92,99 @@ const logos: Record<string, string> = {
   "Apache Kafka": "apachekafka",
   DynamoDB: "dynamodb",
   "REST APIs": "openapi",
+  "Microsoft Foundry / Azure AI Foundry": "microsoft-foundry",
+  "Microsoft Foundry Agents": "foundry-agents",
+  "Azure Functions": "azure-functions",
+  "Azure Container Apps": "azure-container-apps",
+  "Azure AI Search": "azure-ai-search",
+  "Azure Speech": "azure-speech",
+  "Azure AI Services": "azure-ai-services",
+  "AWS Lambda": "aws-lambda",
+  "API Gateway": "aws-api-gateway",
+  S3: "aws-s3",
+  SQS: "aws-sqs",
+  SNS: "aws-sns",
+  EventBridge: "aws-eventbridge",
+  "Step Functions": "aws-step-functions",
+  "Aurora / RDS": "aws-rds",
+  Cognito: "aws-cognito",
+  EC2: "aws-ec2",
+  "ECS / Fargate": "aws-ecs",
+  "AWS IAM": "aws-iam",
+  CloudFormation: "aws-cloudformation",
+  LangChain: "langchain",
+  LangChain4j: "langchain",
+  "Ollama (Local LLMs)": "ollama",
+  "Claude Code": "claude",
+  "Claude Agent SDK": "claude",
+  "OpenAI Codex": "openai",
+  OpenCode: "opencode",
+  "Model Context Protocol (MCP)": "mcp",
+  "MCP Servers": "mcp",
+  "Express.js": "express",
+  Keycloak: "keycloak",
+  "Serverless Framework": "serverless",
+  JWT: "jsonwebtokens",
+  "OAuth 2.0 / OpenID Connect": "openid",
+  Polars: "polars",
+  Dask: "dask",
+  Modin: "modin",
+  PyArrow: "apachearrow",
+  "Apache Airflow": "apacheairflow",
+  "Hadoop MapReduce": "hadoop",
+  HDFS: "hadoop",
+  Cypher: "neo4j",
+  Seaborn: "seaborn",
+  "HTML / CSS": "html5",
+  "React Native": "reactnative",
+  "Ultralytics YOLO": "ultralytics",
+  YOLO11: "ultralytics",
+  OpenTelemetry: "opentelemetry",
+  BigQuery: "googlebigquery",
+  Databricks: "databricks",
 }
+
+const conceptIcons: Record<string, typeof BotIcon> = {
+  "LLM Orchestration": WorkflowIcon,
+  "Agentic Workflows": WorkflowIcon,
+  "Event-Driven Architecture": WorkflowIcon,
+  "ETL / ELT Pipelines": WorkflowIcon,
+  "Multi-Agent Systems": NetworkIcon,
+  Microservices: NetworkIcon,
+  WebSockets: NetworkIcon,
+  "Azure Identity": FingerprintIcon,
+  "Microsoft Entra ID": FingerprintIcon,
+  "Google Cloud IAM": FingerprintIcon,
+  "CI/CD": GitBranchIcon,
+  Pillow: ImageIcon,
+  "Image Classification": ImageIcon,
+  "Image Segmentation": ImageIcon,
+}
+
+const monochrome = new Set([
+  "aws",
+  "expo",
+  "apachekafka",
+  "langchain",
+  "ollama",
+  "openai",
+  "opencode",
+  "express",
+  "keycloak",
+  "serverless",
+  "jsonwebtokens",
+  "openid",
+  "polars",
+  "dask",
+  "modin",
+  "apachearrow",
+  "apacheairflow",
+  "ultralytics",
+  "opentelemetry",
+  "googlebigquery",
+  "databricks",
+  "claude",
+])
 
 function TechIcon({ tech }: { tech: TechStack }) {
   const theme = themed[tech.title]
@@ -113,22 +210,44 @@ function TechIcon({ tech }: { tech: TechStack }) {
       </>
     )
   const logo = logos[tech.title]
+  if (logo === "html5") {
+    return (
+      <span className="flex gap-1">
+        <Image
+          src="/brand-icons/html5.svg"
+          alt=""
+          width={22}
+          height={24}
+          unoptimized
+        />
+        <Image
+          src="/brand-icons/css3.svg"
+          alt=""
+          width={22}
+          height={24}
+          unoptimized
+        />
+      </span>
+    )
+  }
   if (logo)
     return (
       <Image
         src={`/brand-icons/${logo}.svg`}
         alt=""
-        width={28}
+        width={logo === "mcp" ? 66 : 28}
         height={28}
         className={
-          ["aws", "expo", "apachekafka"].includes(logo)
-            ? "dark:brightness-0 dark:invert"
-            : undefined
+          logo === "mcp"
+            ? "h-7 max-w-full object-contain brightness-0 dark:brightness-100"
+            : monochrome.has(logo)
+              ? "dark:brightness-0 dark:invert"
+              : undefined
         }
         unoptimized
       />
     )
-  const Icon = glyphs[tech.category]
+  const Icon = conceptIcons[tech.title] ?? glyphs[tech.category]
   return <Icon aria-hidden className="size-7" />
 }
 
@@ -139,8 +258,8 @@ const featuredTitles = [
   "Model Context Protocol (MCP)",
   "Python",
   "FastAPI",
+  "Microsoft Foundry / Azure AI Foundry",
   "AWS",
-  "Microsoft Azure",
   "PyTorch",
   "Ultralytics YOLO",
   "Apache Spark",
@@ -150,7 +269,9 @@ const featured = featuredTitles.flatMap(
   (title) =>
     TECH_STACK.find(
       (tech) => tech.title === title && tech.status === "hands-on"
-    ) ?? []
+    ) ??
+    TECH_STACK.find((tech) => tech.title === title) ??
+    []
 )
 
 export function TechStack() {

@@ -6,7 +6,6 @@ import { toast } from "sonner"
 import { useWebHaptics } from "web-haptics/react"
 
 import { CopyButton } from "@/components/copy-button"
-import { useIsClient } from "@/hooks/use-is-client"
 import { trackEvent } from "@/lib/events"
 import { copyToClipboardWithEvent } from "@/utils/copy"
 import { decodePhoneNumber, formatPhoneNumber } from "@/utils/string"
@@ -23,7 +22,6 @@ type PhoneItemProps = {
 }
 
 export function PhoneItem({ phoneNumber }: PhoneItemProps) {
-  const isClient = useIsClient()
   const phoneNumberDecoded = decodePhoneNumber(phoneNumber)
   const phoneNumberFormatted = formatPhoneNumber(phoneNumberDecoded)
 
@@ -35,7 +33,7 @@ export function PhoneItem({ phoneNumber }: PhoneItemProps) {
         key: "shift+p",
       },
     })
-    toast.success("WhatsApp number copied")
+    toast.success("Phone number copied")
   })
 
   const { trigger } = useWebHaptics({ debug: true })
@@ -48,23 +46,20 @@ export function PhoneItem({ phoneNumber }: PhoneItemProps) {
 
       <IntroItemContent>
         <IntroItemLink
-          href={isClient ? `https://wa.me/${phoneNumberDecoded.replace(/[^\d]/g, "")}` : "#"}
-          target="_blank"
-          rel="noopener"
-          aria-label={
-            isClient ? `WhatsApp: ${phoneNumberFormatted}` : "WhatsApp number"
-          }
+          href={`tel:${phoneNumberDecoded}`}
+          target="_self"
+          aria-label={`Call ${phoneNumberFormatted}`}
         >
-          {isClient ? `WhatsApp: ${phoneNumberFormatted}` : "[WhatsApp protected]"}
+          {phoneNumberFormatted}
         </IntroItemLink>
       </IntroItemContent>
 
-      <div className="-translate-x-3 opacity-0 transition-opacity ease-out group-hover:opacity-100">
+      <div className="-translate-x-3 opacity-0 transition-opacity ease-out group-focus-within:opacity-100 group-hover:opacity-100">
         <CopyButton
           className="rounded-md border-none text-muted-foreground [&_svg:not([class*='size-'])]:size-3.5"
           variant="ghost"
           size="icon-xs"
-          text={isClient ? phoneNumberDecoded : "[Phone protected]"}
+          text={phoneNumberDecoded}
           onCopySuccess={() => {
             trigger("success")
             trackEvent({

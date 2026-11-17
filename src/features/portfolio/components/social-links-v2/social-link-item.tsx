@@ -23,9 +23,12 @@ export function SocialLinkItem({ icon, title, href, download }: SocialLink) {
         {icon ? (
           <>
             <Image
-              className="rounded-lg select-none corner-squircle supports-corner-shape:rounded-[50%]"
+              className={cn(
+                "rounded-lg select-none corner-squircle supports-corner-shape:rounded-[50%]",
+                icon.endsWith("/instagram.svg") && "bg-white p-1.5"
+              )}
               src={icon}
-              alt={title}
+              alt=""
               width={32}
               height={32}
               quality={100}

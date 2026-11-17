@@ -74,6 +74,16 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      {
+        source: "/steve-ricapa-cv.pdf",
+        headers: [
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          {
+            key: "Content-Disposition",
+            value: 'inline; filename="Steve-Ricapa-CV.pdf"',
+          },
+        ],
+      },
     ]
   },
 }

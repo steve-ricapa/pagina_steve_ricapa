@@ -9,7 +9,7 @@ export const USER: User = {
   headline:
     "AI Engineer · Full-Stack Developer · Cloud & AI Solutions Architect · Data Science",
   address: "Lima, Peru",
-  phoneNumber: "",
+  phoneNumber: "+51931448620",
   email: "",
   website: "",
   jobTitle: "AI Engineer",

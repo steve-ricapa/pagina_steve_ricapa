@@ -17,6 +17,7 @@ export const MAIN_NAV: NavItem[] = [
   { title: "Stack", href: "/#stack" },
   { title: "Projects", href: "/#projects" },
   { title: "Experience", href: "/#experience" },
+  { title: "CV", href: "/cv" },
 ]
 
 export const UTM_PARAMS = { utm_source: "steve-ricapa-portfolio" }

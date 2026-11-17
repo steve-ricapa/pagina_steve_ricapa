@@ -78,6 +78,7 @@ const PORTFOLIO_LINKS: CommandLinkItem[] = [
     icon: BoxIcon,
   },
   { title: "Education", href: "/#education" },
+  { title: "CV", href: "/cv", icon: FileTextIcon },
   { title: "Awards & Achievements", href: "/#awards" },
   {
     title: "Certifications",

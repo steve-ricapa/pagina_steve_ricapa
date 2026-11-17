@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllDocs()
   return [
     { url: SITE_INFO.url },
+    { url: `${SITE_INFO.url}/cv` },
     ...PROJECTS.flatMap(({ slug }) =>
       slug ? [{ url: `${SITE_INFO.url}/projects/${slug}` }] : []
     ),

@@ -1,5 +1,8 @@
+import { InstagramIcon } from "lucide-react"
+
 import {
   GITHUB_URL,
+  INSTAGRAM_URL,
   LINKEDIN_URL,
 } from "@/features/portfolio/data/social-links"
 import { USER } from "@/features/portfolio/data/user"
@@ -39,6 +42,15 @@ export function SiteFooter({
               aria-label="LinkedIn"
             >
               <Icons.linkedin className="size-4" />
+            </a>
+            <a
+              className="grid h-11 w-12 place-items-center text-muted-foreground hover:text-foreground"
+              href={INSTAGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+            >
+              <InstagramIcon className="size-4" />
             </a>
           </div>
         </div>
