@@ -4,6 +4,7 @@ import {
   withExpiration,
 } from "../lib/certification-catalog"
 import type { Certification, CertificationCard } from "../types/certifications"
+import { PLATZI_CERTIFICATIONS } from "./certifications-platzi"
 
 type ListedFields = Pick<
   Certification,
@@ -334,10 +335,10 @@ const ab100 = certification({
   ],
 })
 
-// Private records are kept in .local/ and must never be imported by the app.
 export const PUBLIC_CERTIFICATIONS = getPublicCertifications([
   ...linkedin,
   ab100,
+  ...PLATZI_CERTIFICATIONS,
 ])
 
 export function getCertificationCards(): CertificationCard[] {

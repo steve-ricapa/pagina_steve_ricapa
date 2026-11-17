@@ -1,5 +1,4 @@
 import assert from "node:assert/strict"
-import { existsSync, readFileSync } from "node:fs"
 import test from "node:test"
 
 import {
@@ -12,13 +11,13 @@ import {
   withExpiration,
 } from "../src/features/portfolio/lib/certification-catalog"
 import { certificationsMarkdown } from "../src/features/portfolio/lib/profile-markdown"
-import type { Certification } from "../src/features/portfolio/types/certifications"
 
 test("32 supplied public credentials and one independently reported exam", () => {
-  assert.equal(PUBLIC_CERTIFICATIONS.length, 33)
+  assert.equal(PUBLIC_CERTIFICATIONS.length, 56)
   assert.equal(
-    PUBLIC_CERTIFICATIONS.filter((item) => item.source?.startsWith("LinkedIn"))
-      .length,
+    PUBLIC_CERTIFICATIONS.filter(
+      (item) => item.issuer !== "Platzi" && item.source?.startsWith("LinkedIn")
+    ).length,
     32
   )
   assert.equal(
@@ -74,33 +73,27 @@ test("private records are excluded and duplicate identities are rejected", () =>
       ]),
     /Duplicate/
   )
-  assert.doesNotMatch(certificationsMarkdown, /Platzi/i)
 })
 
-const localFile = ".local/certifications-platzi.json"
-test(
-  "complete private inventory stays out of the public catalog and export",
-  { skip: !existsSync(localFile) },
-  () => {
-    const privateRecords = JSON.parse(
-      readFileSync(localFile, "utf8")
-    ) as Certification[]
-    assert.equal(privateRecords.length, 23)
-    assert.ok(
-      privateRecords.every(
-        (record) => record.issuer === "Platzi" && record.isPublic === false
-      )
+test("23 public Platzi courses keep the original dates and no invented links", () => {
+  const courses = PUBLIC_CERTIFICATIONS.filter(
+    (item) => item.issuer === "Platzi"
+  )
+  assert.equal(courses.length, 23)
+  assert.equal(
+    PUBLIC_CERTIFICATIONS.filter((item) => item.issuer !== "Platzi").length,
+    33
+  )
+  assert.ok(
+    courses.every(
+      (item) => item.isPublic && !item.featured && item.credentialUrl === null
     )
-    assert.equal(PUBLIC_CERTIFICATIONS.length + privateRecords.length, 56)
-    assert.equal(
-      getPublicCertifications([...PUBLIC_CERTIFICATIONS, ...privateRecords])
-        .length,
-      33
-    )
-    assert.ok(
-      privateRecords.every(
-        (record) => !certificationsMarkdown.includes(record.title)
-      )
-    )
-  }
-)
+  )
+  assert.deepEqual(
+    courses.flatMap((item) => item.issueDate ?? []),
+    ["2022-01", "2022-01", "2021-03"]
+  )
+  assert.ok(
+    courses.every((item) => certificationsMarkdown.includes(item.title))
+  )
+})

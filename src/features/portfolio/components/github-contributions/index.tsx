@@ -22,7 +22,7 @@ export function GitHubContributions() {
 async function Contributions() {
   const data = await getGitHubContributions().catch(() => null)
   return data ? (
-    <GitHubContributionGraph data={data} />
+    <GitHubContributionGraph data={data.data} totalCount={data.totalCount} />
   ) : (
     <PanelContent className="text-sm text-muted-foreground">
       Contribution data is temporarily unavailable.{" "}

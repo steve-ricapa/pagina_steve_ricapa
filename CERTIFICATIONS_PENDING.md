@@ -10,8 +10,6 @@ El catálogo se basa en el inventario de LinkedIn proporcionado por Steve, no en
 | Microsoft Security Compliance y registros de Palo Alto Networks con tipo pendiente                                            | Documento del emisor para confirmar el tipo de credencial y, cuando proceda, la grafía original. Los dos PSE vencieron en julio de 2025.                                            |
 | Demás registros                                                                                                               | Enlaces personales verificables, cuando existan y estén autorizados. No publicar ID ni datos de nacimiento de Cambridge.                                                            |
 
-## Catálogo local
+## Cursos complementarios
 
-Las 23 entradas de Platzi se almacenan en `.local/certifications-platzi.json`, fuera de Git y sin importaciones desde la app. Conserva una copia privada: un clon nuevo no incluye ese archivo. No almacenar credenciales privadas en `public/` ni en el código del sitio.
-
-Para habilitar una entrada concreta con autorización, mueve solo esa entrada al catálogo `src/features/portfolio/data/certifications.ts`, configura `isPublic: true` y elimina la copia local de esa entrada. No conectar el archivo privado al build.
+Las 23 entradas de Platzi autorizadas para publicación están en `src/features/portfolio/data/certifications-platzi.ts`. Se muestran bajo «Additional Courses & Training», sin mezclar sus registros con los filtros de la biblioteca principal. Solo se incluyen las fechas proporcionadas; los enlaces de verificación siguen pendientes.

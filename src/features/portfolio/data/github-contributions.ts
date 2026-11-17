@@ -1,38 +1,20 @@
 import { unstable_cache } from "next/cache"
-import { z } from "zod"
 
+import { parseGitHubCalendar } from "../lib/github-calendar"
 import { GITHUB_USERNAME } from "./social-links"
-
-const responseSchema = z.object({
-  contributions: z
-    .array(
-      z.object({
-        date: z.string().date(),
-        count: z.number().int().nonnegative(),
-        level: z.union([
-          z.literal(0),
-          z.literal(1),
-          z.literal(2),
-          z.literal(3),
-          z.literal(4),
-        ]),
-      })
-    )
-    .min(1),
-})
 
 export const getGitHubContributions = unstable_cache(
   async () => {
-    const base =
-      process.env.GITHUB_CONTRIBUTIONS_API_URL ||
-      "https://github-contributions-api.jogruber.de"
     const res = await fetch(
-      `${base.replace(/\/$/, "")}/v4/${GITHUB_USERNAME}?y=last`,
-      { signal: AbortSignal.timeout(4500) }
+      `https://github.com/users/${GITHUB_USERNAME}/contributions`,
+      {
+        headers: { "Accept-Language": "en-US,en;q=0.9" },
+        signal: AbortSignal.timeout(5000),
+      }
     )
-    if (!res.ok) throw new Error(`Contributions request returned ${res.status}`)
-    return responseSchema.parse(await res.json()).contributions
+    if (!res.ok) throw new Error(`GitHub calendar returned ${res.status}`)
+    return parseGitHubCalendar(await res.text())
   },
-  ["github-public-contributions", GITHUB_USERNAME],
-  { revalidate: 3600 }
+  ["github-direct-public-calendar", GITHUB_USERNAME],
+  { revalidate: 300 }
 )

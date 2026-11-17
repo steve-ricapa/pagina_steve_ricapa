@@ -20,11 +20,18 @@ import {
 
 import { GITHUB_URL } from "../../data/social-links"
 
-export function GitHubContributionGraph({ data }: { data: Activity[] }) {
+export function GitHubContributionGraph({
+  data,
+  totalCount,
+}: {
+  data: Activity[]
+  totalCount: number
+}) {
   return (
     <ContributionGraph
       className="mx-auto py-2"
       data={data}
+      totalCount={totalCount}
       blockSize={11}
       blockMargin={3}
       blockRadius={0}
@@ -69,8 +76,8 @@ export function GitHubContributionGraph({ data }: { data: Activity[] }) {
                 rel="noopener"
               >
                 GitHub profile
-              </a>
-              {" "}over the past year.
+              </a>{" "}
+              over the past year.
             </div>
           )}
         </ContributionGraphTotalCount>
