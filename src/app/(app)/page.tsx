@@ -41,10 +41,12 @@ export default function Page() {
         }}
       />
 
-      <div className="mx-auto md:max-w-3xl *:[[id]]:scroll-mt-22">
+      <div className="portfolio-home mx-auto md:max-w-3xl *:[[id]]:scroll-mt-22">
         <ProfileCover />
-        <ProfileHeader />
-        <p className="border-x border-edge px-4 py-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
+        <div className="portfolio-intro">
+          <ProfileHeader />
+        </div>
+        <p className="portfolio-intro portfolio-intro-copy border-x border-edge px-4 py-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
           {USER.bio}
         </p>
         <Separator />
