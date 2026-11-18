@@ -7,8 +7,8 @@ export const EDUCATION: Experience[] = [
     positions: [
       {
         id: "data-science",
-        title: "Ciencia de Datos",
-        employmentPeriod: { start: "2021", current: true },
+        title: "Bachiller en Ciencia de Datos e Inteligencia Artificial",
+        employmentPeriod: { start: "2021" },
         icon: "education",
         skills: [
           "Data Science",

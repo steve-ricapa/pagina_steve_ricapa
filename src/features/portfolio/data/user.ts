@@ -25,7 +25,7 @@ export const USER: User = {
 
 I design and orchestrate **AI agents** that connect LLMs to APIs and tools. My full-stack work spans **Python, FastAPI, Java, Spring Boot, React and TypeScript**, with cloud-native, serverless and event-driven architectures on **AWS and Microsoft Azure**.
 
-I joined the **Data Science program at UTEC** in Lima in 2021. My academic projects span distributed cybersecurity analytics, supervised learning, and computer vision, including pre-trained model inference and implementing a residual U-Net in PyTorch.`,
+I hold a **bachelor’s degree in Data Science and Artificial Intelligence from UTEC** in Lima, where I started in 2021. My academic projects span distributed cybersecurity analytics, supervised learning, and computer vision, including pre-trained model inference and implementing a residual U-Net in PyTorch.`,
   avatar: "/steve-ricapa.jpg",
   ogImage: "/og/simple",
   namePronunciationUrl: "",
